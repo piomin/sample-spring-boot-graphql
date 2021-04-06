@@ -1,0 +1,23 @@
+package pl.piomin.samples.spring.graphql.fetcher;
+
+import com.netflix.graphql.dgs.DgsComponent;
+import com.netflix.graphql.dgs.DgsData;
+import pl.piomin.samples.spring.graphql.domain.Organization;
+import pl.piomin.samples.spring.graphql.domain.OrganizationInput;
+import pl.piomin.samples.spring.graphql.repository.OrganizationRepository;
+
+@DgsComponent
+public class OrganizationMutation {
+
+    OrganizationRepository repository;
+
+    OrganizationMutation(OrganizationRepository repository) {
+        this.repository = repository;
+    }
+
+    @DgsData(parentType = "OrganizationMutation", field = "newOrganization")
+    public Organization newOrganization(OrganizationInput organizationInput) {
+        return repository.save(new Organization(null, organizationInput.getName(), null, null));
+    }
+
+}

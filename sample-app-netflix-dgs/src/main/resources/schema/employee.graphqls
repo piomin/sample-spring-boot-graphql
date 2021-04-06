@@ -1,10 +1,10 @@
-extend type QueryResolver {
+type EmployeeResolver {
   employees: [Employee]
   employeesWithFilter(filter: EmployeeFilter): [Employee]
   employee(id: ID!): Employee!
 }
 
-extend type MutationResolver {
+type EmployeeMutation {
   newEmployee(employee: EmployeeInput!): Employee
 }
 
@@ -41,6 +41,6 @@ input FilterField {
 }
 
 schema {
-  query: QueryResolver
-  mutation: MutationResolver
+  query: EmployeeResolver
+  mutation: EmployeeMutation
 }
