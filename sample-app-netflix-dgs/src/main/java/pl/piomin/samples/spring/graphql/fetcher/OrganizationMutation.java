@@ -15,7 +15,7 @@ public class OrganizationMutation {
         this.repository = repository;
     }
 
-    @DgsData(parentType = "OrganizationMutation", field = "newOrganization")
+    @DgsData(parentType = "MutationResolver", field = "newOrganization")
     public Organization newOrganization(OrganizationInput organizationInput) {
         return repository.save(new Organization(null, organizationInput.getName(), null, null));
     }

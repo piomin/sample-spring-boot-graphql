@@ -19,7 +19,7 @@ public class DepartmentMutation {
         this.organizationRepository = organizationRepository;
     }
 
-    @DgsData(parentType = "DepartmentMutation", field = "newDepartment")
+    @DgsData(parentType = "MutationResolver", field = "newDepartment")
     public Department newDepartment(DepartmentInput departmentInput) {
         Organization organization = organizationRepository.findById(departmentInput.getOrganizationId()).orElseThrow();
         return departmentRepository.save(new Department(null, departmentInput.getName(), null, organization));

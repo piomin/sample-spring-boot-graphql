@@ -24,7 +24,7 @@ public class EmployeeMutation {
         this.organizationRepository = organizationRepository;
     }
 
-    @DgsData(parentType = "EmployeeMutation", field = "newEmployee")
+    @DgsData(parentType = "MutationResolver", field = "newEmployee")
     public Employee addEmployee(@InputArgument("input") EmployeeInput employeeInput) {
         Department department = departmentRepository.findById(employeeInput.getDepartmentId()).orElseThrow();
         Organization organization = organizationRepository.findById(employeeInput.getOrganizationId()).orElseThrow();

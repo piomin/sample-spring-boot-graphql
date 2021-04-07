@@ -19,6 +19,6 @@ public class OrganizationQueryResolver implements GraphQLQueryResolver {
 	}
 
 	public Organization organization(Integer id) {
-		return repository.findById(id).get();
+		return repository.findById(id).orElseThrow();
 	}
 }
