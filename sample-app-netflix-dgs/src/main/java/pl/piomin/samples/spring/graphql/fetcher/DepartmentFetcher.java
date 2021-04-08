@@ -35,7 +35,6 @@ public class DepartmentFetcher {
     @DgsData(parentType = "QueryResolver", field = "departments")
     public Iterable<Department> findAll(DataFetchingEnvironment environment) {
         DataFetchingFieldSelectionSet s = environment.getSelectionSet();
-        List<Specification<Department>> specifications = new ArrayList<>();
         if (s.contains("employees") && !s.contains("organization"))
             return repository.findAll(fetchEmployees());
         else if (!s.contains("employees") && s.contains("organization"))
@@ -47,7 +46,7 @@ public class DepartmentFetcher {
     }
 
     @DgsData(parentType = "QueryResolver", field = "department")
-    public Department department(@InputArgument("id") Integer id, DataFetchingEnvironment environment) {
+    public Department findById(@InputArgument("id") Integer id, DataFetchingEnvironment environment) {
         Specification<Department> spec = byId(id);
         DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();
         EmployeeContext employeeContext = DgsContext.getCustomContext(environment);

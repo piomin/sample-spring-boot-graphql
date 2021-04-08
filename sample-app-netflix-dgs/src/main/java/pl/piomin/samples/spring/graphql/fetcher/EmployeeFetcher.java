@@ -40,7 +40,8 @@ public class EmployeeFetcher {
     public Employee findById(@InputArgument("id") Integer id, DataFetchingEnvironment dfe) {
         EmployeeContext employeeContext = DgsContext.getCustomContext(dfe);
         List<Employee> employees = employeeContext.getEmployees();
-        Optional<Employee> employeeOpt = employees.stream().filter(employee -> employee.getId().equals(id)).findFirst();
+        Optional<Employee> employeeOpt = employees.stream().filter(employee -> employee.getId().equals(id))
+                .findFirst();
         return employeeOpt.orElseGet(() -> repository.findById(id).orElseThrow(DgsEntityNotFoundException::new));
     }
 
