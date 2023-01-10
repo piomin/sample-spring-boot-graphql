@@ -1,0 +1,8 @@
+query {
+  employee(id: 1) {
+    id
+    firstName
+    lastName
+    salary
+  }
+}
