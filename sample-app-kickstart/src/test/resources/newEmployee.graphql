@@ -1,0 +1,13 @@
+mutation {
+  newEmployee(employee: {
+    firstName: "John"
+    lastName: "Wick"
+    position: "developer"
+    salary: 10000
+    age: 20
+    departmentId: 1
+    organizationId: 1
+  }) {
+    id
+  }
+}

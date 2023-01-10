@@ -1,0 +1,7 @@
+mutation {
+  newOrganization(organization: {
+    name: "Test5"
+  }) {
+    id
+  }
+}
