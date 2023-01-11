@@ -2,6 +2,7 @@ package pl.piomin.samples.spring.graphql.fetcher;
 
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
+import com.netflix.graphql.dgs.InputArgument;
 import pl.piomin.samples.spring.graphql.domain.Department;
 import pl.piomin.samples.spring.graphql.domain.DepartmentInput;
 import pl.piomin.samples.spring.graphql.domain.Organization;
@@ -20,7 +21,7 @@ public class DepartmentMutation {
     }
 
     @DgsData(parentType = "MutationResolver", field = "newDepartment")
-    public Department newDepartment(DepartmentInput departmentInput) {
+    public Department newDepartment(@InputArgument("department") DepartmentInput departmentInput) {
         Organization organization = organizationRepository.findById(departmentInput.getOrganizationId()).orElseThrow();
         return departmentRepository.save(new Department(null, departmentInput.getName(), null, organization));
     }
