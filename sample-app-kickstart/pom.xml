@@ -13,6 +13,7 @@
 
     <properties>
         <graphql.spring.version>7.1.0</graphql.spring.version>
+        <sonar.moduleKey>${artifactId}</sonar.moduleKey>
     </properties>
 
     <dependencies>
