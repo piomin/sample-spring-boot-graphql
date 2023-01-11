@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
+  analyze:
     docker:
       - image: 'cimg/openjdk:11.0'
     steps:
@@ -23,5 +23,5 @@ workflows:
     jobs:
       - maven/test:
           executor: j11
-      - build:
+      - analyze:
           context: SonarCloud
