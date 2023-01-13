@@ -17,7 +17,8 @@
     <modules>
         <module>sample-app-netflix-dgs</module>
 		<module>sample-app-kickstart</module>
-	</modules>
+        <module>sample-app-spring-graphql</module>
+    </modules>
 
 	<properties>
 		<java.version>11</java.version>
