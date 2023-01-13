@@ -1,0 +1,20 @@
+type Query {
+    departments: [Department]
+    department(id: ID!): Department!
+}
+
+type Mutation {
+    newDepartment(department: DepartmentInput!): Department
+}
+
+input DepartmentInput {
+    name: String!
+    organizationId: Int
+}
+
+type Department {
+    id: ID!
+    name: String!
+    organization: Organization
+    employees: [Employee]
+}
