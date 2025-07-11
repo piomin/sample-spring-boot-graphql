@@ -10,9 +10,19 @@ spring:
       connection-timeout: 2000
       initialization-fail-timeout: 0
   jpa:
+    defer-datasource-initialization: true
+    show-sql: true
     database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
-        show_sql: true
         format_sql: true
-        enable_lazy_load_no_trans: true
+  sql.init.mode: always
+
+graphql:
+  servlet:
+    enabled: true
+    mapping: /graphql
+  graphiql:
+    enabled: true
