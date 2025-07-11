@@ -1,17 +1,53 @@
 package pl.piomin.samples.spring.graphql.filter;
 
-import lombok.Data;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
+import java.util.Objects;
 
-@Data
 public class FilterField {
-	private String operator;
-	private String value;
+    private String operator;
+    private String value;
 
-	public Predicate generateCriteria(CriteriaBuilder builder, Path field) {
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FilterField that = (FilterField) o;
+        return Objects.equals(operator, that.operator) &&
+               Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(operator, value);
+    }
+
+    @Override
+    public String toString() {
+        return "FilterField{" +
+               "operator='" + operator + '\'' +
+               ", value='" + value + '\'' +
+               '}';
+    }
+
+    public Predicate generateCriteria(CriteriaBuilder builder, Path field) {
 		try {
 			int v = Integer.parseInt(value);
 			switch (operator) {
