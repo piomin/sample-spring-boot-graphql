@@ -12,7 +12,7 @@
     <version>1.0</version>
 
     <properties>
-        <graphql.spring.version>14.0.0</graphql.spring.version>
+        <graphql.spring.version>14.1.0</graphql.spring.version>
         <sonar.moduleKey>${artifactId}</sonar.moduleKey>
     </properties>
 
