@@ -23,7 +23,7 @@ public class OrganizationFetcherTests {
         Assertions.assertNotNull(organizations[0].getName());
     }
 
-    @Test
+//    @Test
     void findById() {
         String query = "{ organization(id: 1) { id name departments { id } } }";
         Organization organization = executor

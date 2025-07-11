@@ -17,8 +17,6 @@ public class EmployeeFilter {
     }
 
     public FilterField getSalary() {
-
-    public FilterField getSalary() {
         return salary;
     }
 

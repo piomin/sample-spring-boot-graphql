@@ -14,7 +14,7 @@
     <version>1.0</version>
 
     <properties>
-        <netflix-dgs.spring.version>3.12.1</netflix-dgs.spring.version>
+        <netflix-dgs.spring.version>5.0.0</netflix-dgs.spring.version>
         <sonar.moduleKey>${artifactId}</sonar.moduleKey>
     </properties>
 
@@ -54,7 +54,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
+                <version>0.8.13</version>
                 <executions>
                     <execution>
                         <goals>
