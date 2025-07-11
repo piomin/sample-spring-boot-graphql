@@ -7,6 +7,17 @@ public class EmployeeFilter {
     private FilterField age;
     private FilterField position;
 
+    public EmployeeFilter() {
+    }
+
+    public EmployeeFilter(FilterField salary, FilterField age, FilterField position) {
+        this.salary = salary;
+        this.age = age;
+        this.position = position;
+    }
+
+    public FilterField getSalary() {
+
     public FilterField getSalary() {
         return salary;
     }
