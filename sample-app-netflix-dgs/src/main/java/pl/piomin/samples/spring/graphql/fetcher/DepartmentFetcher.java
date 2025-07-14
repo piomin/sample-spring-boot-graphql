@@ -7,6 +7,9 @@ import com.netflix.graphql.dgs.context.DgsContext;
 import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingFieldSelectionSet;
+import jakarta.persistence.criteria.Fetch;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
 import pl.piomin.samples.spring.graphql.context.EmployeeContext;
 import pl.piomin.samples.spring.graphql.domain.Department;
@@ -14,12 +17,6 @@ import pl.piomin.samples.spring.graphql.domain.Employee;
 import pl.piomin.samples.spring.graphql.domain.Organization;
 import pl.piomin.samples.spring.graphql.repository.DepartmentRepository;
 
-import javax.persistence.criteria.Fetch;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
