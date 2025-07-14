@@ -14,7 +14,7 @@
     <version>1.0</version>
 
     <properties>
-        <netflix-dgs.spring.version>6.0.0</netflix-dgs.spring.version>
+        <netflix-dgs.spring.version>6.0.5</netflix-dgs.spring.version>
         <sonar.moduleKey>${artifactId}</sonar.moduleKey>
     </properties>
 
