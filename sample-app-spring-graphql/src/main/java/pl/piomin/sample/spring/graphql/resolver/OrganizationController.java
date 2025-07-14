@@ -13,9 +13,9 @@ import pl.piomin.sample.spring.graphql.domain.Organization;
 import pl.piomin.sample.spring.graphql.domain.OrganizationInput;
 import pl.piomin.sample.spring.graphql.repository.OrganizationRepository;
 
-import javax.persistence.criteria.Fetch;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Fetch;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 
 @Controller
 public class OrganizationController {

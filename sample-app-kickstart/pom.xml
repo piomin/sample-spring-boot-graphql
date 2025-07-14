@@ -4,15 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>pl.piomin.samples</groupId>
-        <artifactId>sample-spring-boot-graphql</artifactId>
-        <version>1.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.10</version>
+        <relativePath/>
     </parent>
     <artifactId>sample-app-kickstart</artifactId>
     <version>1.0</version>
 
     <properties>
-        <graphql.spring.version>14.1.0</graphql.spring.version>
+        <graphql.spring.version>15.1.0</graphql.spring.version>
         <sonar.moduleKey>${artifactId}</sonar.moduleKey>
     </properties>
 

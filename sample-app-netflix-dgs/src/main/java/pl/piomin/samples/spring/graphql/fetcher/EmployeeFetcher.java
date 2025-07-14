@@ -5,7 +5,6 @@ import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.context.DgsContext;
 import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
-import graphql.execution.DataFetcherResult;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.data.jpa.domain.Specification;
 import pl.piomin.samples.spring.graphql.context.EmployeeContext;
