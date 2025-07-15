@@ -22,8 +22,8 @@ This repository contains three independent Spring Boot applications that demonst
 
 ```mermaid
 graph TB
-    A[Organization] --&gt; B[Department]
-    B --&gt; C[Employee]
+    A[Organization] --> B[Department]
+    B --> C[Employee]
     subgraph GraphQLImplementations ["GraphQL Implementations"]
         D[GraphQL Kickstart]
         E[Netflix DGS]
@@ -33,10 +33,10 @@ graph TB
         G[JPA/Hibernate]
         H[H2 Database]
     end
-    D --&gt; G
-    E --&gt; G
-    F --&gt; G
-    G --&gt; H
+    D --> G
+    E --> G
+    F --> G
+    G --> H
 ```
 
 ## 📦 Modules
