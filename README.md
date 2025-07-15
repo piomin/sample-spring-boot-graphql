@@ -1,4 +1,4 @@
-# Spring Boot GraphQL Demo Project [![Twitter](https://img.shields.io/twitter/follow/piotr_minkowski.svg?style=social&logo=twitter&label=Follow%20Me)](https://twitter.com/piotr_minkowski)
+# Spring Boot GraphQL Demo Project
 
 [![Twitter](https://img.shields.io/twitter/follow/piotr_minkowski.svg?style=social&logo=twitter&label=Follow%20Me)](https://twitter.com/piotr_minkowski)
 [![CircleCI](https://circleci.com/gh/piomin/sample-spring-boot-graphql.svg?style=svg)](https://circleci.com/gh/piomin/sample-spring-boot-graphql)
@@ -12,12 +12,6 @@ A comprehensive demonstration of different approaches to implementing GraphQL wi
 ## 🚀 Project Overview
 
 This repository contains three independent Spring Boot applications that demonstrate different approaches to implementing GraphQL APIs. Each application implements the same domain model (Organization → Department → Employee hierarchy) using different GraphQL libraries, allowing for direct comparison of approaches and features.
-
-## 🔗 Related Articles
-
-1. How to simplify Spring Boot and GraphQL development with GraphQL Kickstart library. The article describes more advanced solution like filtering or joins with a database. The example is available in the branch [master](https://github.com/piomin/sample-spring-boot-graphql/tree/master/sample-app-kickstart). A detailed guide may be found in the following article: [An Advanced Guide to GraphQL with Spring Boot](https://piotrminkowski.com/2020/07/31/an-advanced-guide-to-graphql-with-spring-boot/)
-2. How to simplify Spring Boot and GraphQL development with Netflix DGS library. The example is available in the branch [master](https://github.com/piomin/sample-spring-boot-graphql/tree/master/sample-app-netflix-dgs). A detailed guide may be found in the following article: [An Advanced GraphQL with Spring Boot and Netflix DGS](https://piotrminkowski.com/2021/04/08/an-advanced-graphql-with-spring-boot-and-netflix-dgs/).
-3. How to simplify Spring Boot and GraphQL development with Spring for Graph library. The example is available in the branch [master](https://github.com/piomin/sample-spring-boot-graphql/tree/master/sample-app-spring-graphql). A detailed guide may be found in the following article: [An Advanced GraphQL with Spring Boot](https://piotrminkowski.com/2023/01/18/an-advanced-graphql-with-spring-boot/).
 
 ## 🏗️ Architecture
 
@@ -336,6 +330,12 @@ Each module includes comprehensive test coverage for:
 - **Code Coverage**: JaCoCo
 - **CI/CD**: CircleCI
 - **Code Quality**: SonarCloud
+
+## 🔗 Related Articles
+
+- [An Advanced Guide to GraphQL with Spring Boot](https://piotrminkowski.com/2020/07/31/an-advanced-guide-to-graphql-with-spring-boot/) - GraphQL Kickstart implementation
+- [An Advanced GraphQL with Spring Boot and Netflix DGS](https://piotrminkowski.com/2021/04/08/an-advanced-graphql-with-spring-boot-and-netflix-dgs/) - Netflix DGS implementation
+- [An Advanced GraphQL with Spring Boot](https://piotrminkowski.com/2023/01/18/an-advanced-graphql-with-spring-boot/) - Spring for GraphQL implementation
 
 ## 🤝 Contributing
 
