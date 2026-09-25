@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeQueryResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sample-app-kickstart</a> &gt; <a href="index.source.html" class="el_package">pl.piomin.samples.spring.graphql.resolver</a> &gt; <span class="el_source">EmployeeQueryResolver.java</span></div><h1>EmployeeQueryResolver.java</h1><pre class="source lang-java linenums">package pl.piomin.samples.spring.graphql.resolver;
+
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
+import pl.piomin.samples.spring.graphql.domain.Employee;
+import pl.piomin.samples.spring.graphql.filter.EmployeeFilter;
+import pl.piomin.samples.spring.graphql.filter.FilterField;
+import pl.piomin.samples.spring.graphql.repository.EmployeeRepository;
+
+@Controller
+public class EmployeeQueryResolver {
+
+	private EmployeeRepository repository;
+
+<span class="fc" id="L17">	EmployeeQueryResolver(EmployeeRepository repository) {</span>
+<span class="fc" id="L18">		this.repository = repository;</span>
+<span class="fc" id="L19">	}</span>
+
+	@QueryMapping
+	public Iterable&lt;Employee&gt; employees() {
+<span class="fc" id="L23">		return repository.findAll();</span>
+	}
+
+	@QueryMapping
+	public Employee employee(@Argument Integer id) {
+<span class="fc" id="L28">		return repository.findById(id).get();</span>
+	}
+
+	@QueryMapping
+	public Iterable&lt;Employee&gt; employeesWithFilter(@Argument EmployeeFilter filter) {
+<span class="fc" id="L33">		Specification&lt;Employee&gt; spec = null;</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">		if (filter.getSalary() != null)</span>
+<span class="fc" id="L35">			spec = bySalary(filter.getSalary());</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">		if (filter.getAge() != null)</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">			spec = (spec == null ? byAge(filter.getAge()) : spec.and(byAge(filter.getAge())));</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">		if (filter.getPosition() != null)</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">			spec = (spec == null ? byPosition(filter.getPosition()) :</span>
+<span class="nc" id="L40">					spec.and(byPosition(filter.getPosition())));</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">		if (spec != null)</span>
+<span class="fc" id="L42">			return repository.findAll(spec);</span>
+		else
+<span class="nc" id="L44">			return repository.findAll();</span>
+	}
+
+	private Specification&lt;Employee&gt; bySalary(FilterField filterField) {
+<span class="fc" id="L48">		return (root, query, builder) -&gt; filterField.generateCriteria(builder, root.get(&quot;salary&quot;));</span>
+	}
+
+	private Specification&lt;Employee&gt; byAge(FilterField filterField) {
+<span class="nc" id="L52">		return (root, query, builder) -&gt; filterField.generateCriteria(builder, root.get(&quot;age&quot;));</span>
+	}
+
+	private Specification&lt;Employee&gt; byPosition(FilterField filterField) {
+<span class="nc" id="L56">		return (root, query, builder) -&gt; filterField.generateCriteria(builder, root.get(&quot;position&quot;));</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

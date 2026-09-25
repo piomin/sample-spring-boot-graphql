@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeInput.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sample-app-spring-graphql</a> &gt; <a href="index.source.html" class="el_package">pl.piomin.sample.spring.graphql.domain</a> &gt; <span class="el_source">EmployeeInput.java</span></div><h1>EmployeeInput.java</h1><pre class="source lang-java linenums">package pl.piomin.sample.spring.graphql.domain;
+
+import java.util.Objects;
+
+public class EmployeeInput {
+    private String firstName;
+    private String lastName;
+    private String position;
+    private int salary;
+    private int age;
+    private Integer departmentId;
+    private Integer organizationId;
+
+<span class="fc" id="L14">    public EmployeeInput() {</span>
+<span class="fc" id="L15">    }</span>
+
+    public EmployeeInput(String firstName, String lastName, String position, int salary, int age, 
+<span class="nc" id="L18">                        Integer departmentId, Integer organizationId) {</span>
+<span class="nc" id="L19">        this.firstName = firstName;</span>
+<span class="nc" id="L20">        this.lastName = lastName;</span>
+<span class="nc" id="L21">        this.position = position;</span>
+<span class="nc" id="L22">        this.salary = salary;</span>
+<span class="nc" id="L23">        this.age = age;</span>
+<span class="nc" id="L24">        this.departmentId = departmentId;</span>
+<span class="nc" id="L25">        this.organizationId = organizationId;</span>
+<span class="nc" id="L26">    }</span>
+
+    public String getFirstName() {
+<span class="fc" id="L29">        return firstName;</span>
+    }
+
+    public void setFirstName(String firstName) {
+<span class="fc" id="L33">        this.firstName = firstName;</span>
+<span class="fc" id="L34">    }</span>
+
+    public String getLastName() {
+<span class="fc" id="L37">        return lastName;</span>
+    }
+
+    public void setLastName(String lastName) {
+<span class="fc" id="L41">        this.lastName = lastName;</span>
+<span class="fc" id="L42">    }</span>
+
+    public String getPosition() {
+<span class="fc" id="L45">        return position;</span>
+    }
+
+    public void setPosition(String position) {
+<span class="fc" id="L49">        this.position = position;</span>
+<span class="fc" id="L50">    }</span>
+
+    public int getSalary() {
+<span class="fc" id="L53">        return salary;</span>
+    }
+
+    public void setSalary(int salary) {
+<span class="fc" id="L57">        this.salary = salary;</span>
+<span class="fc" id="L58">    }</span>
+
+    public int getAge() {
+<span class="fc" id="L61">        return age;</span>
+    }
+
+    public void setAge(int age) {
+<span class="fc" id="L65">        this.age = age;</span>
+<span class="fc" id="L66">    }</span>
+
+    public Integer getDepartmentId() {
+<span class="fc" id="L69">        return departmentId;</span>
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+<span class="fc" id="L73">        this.departmentId = departmentId;</span>
+<span class="fc" id="L74">    }</span>
+
+    public Integer getOrganizationId() {
+<span class="fc" id="L77">        return organizationId;</span>
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+<span class="fc" id="L81">        this.organizationId = organizationId;</span>
+<span class="fc" id="L82">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L87" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L88">        EmployeeInput that = (EmployeeInput) o;</span>
+<span class="nc bnc" id="L89" title="All 4 branches missed.">        return salary == that.salary &amp;&amp;</span>
+               age == that.age &amp;&amp;
+<span class="nc bnc" id="L91" title="All 2 branches missed.">               Objects.equals(firstName, that.firstName) &amp;&amp;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">               Objects.equals(lastName, that.lastName) &amp;&amp;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">               Objects.equals(position, that.position) &amp;&amp;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">               Objects.equals(departmentId, that.departmentId) &amp;&amp;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">               Objects.equals(organizationId, that.organizationId);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L100">        return Objects.hash(firstName, lastName, position, salary, age, departmentId, organizationId);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L105">        return &quot;EmployeeInput{&quot; +</span>
+               &quot;firstName='&quot; + firstName + '\'' +
+               &quot;, lastName='&quot; + lastName + '\'' +
+               &quot;, position='&quot; + position + '\'' +
+               &quot;, salary=&quot; + salary +
+               &quot;, age=&quot; + age +
+               &quot;, departmentId=&quot; + departmentId +
+               &quot;, organizationId=&quot; + organizationId +
+               '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

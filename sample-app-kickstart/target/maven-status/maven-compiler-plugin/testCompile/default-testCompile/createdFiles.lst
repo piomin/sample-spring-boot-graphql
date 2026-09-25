@@ -1,0 +1,6 @@
+pl/piomin/samples/spring/graphql/DepartmentMutableResolverTests.class
+pl/piomin/samples/spring/graphql/EmployeeMutableResolverTests.class
+pl/piomin/samples/spring/graphql/EmployeeQueryResolverTests.class
+pl/piomin/samples/spring/graphql/OrganizationMutableResolverTests.class
+pl/piomin/samples/spring/graphql/OrganizationQueryResolverTests.class
+pl/piomin/samples/spring/graphql/DepartmentQueryResolverTests.class

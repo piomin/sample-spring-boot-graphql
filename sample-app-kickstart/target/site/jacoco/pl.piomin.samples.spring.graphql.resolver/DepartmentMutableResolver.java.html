@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DepartmentMutableResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sample-app-kickstart</a> &gt; <a href="index.source.html" class="el_package">pl.piomin.samples.spring.graphql.resolver</a> &gt; <span class="el_source">DepartmentMutableResolver.java</span></div><h1>DepartmentMutableResolver.java</h1><pre class="source lang-java linenums">package pl.piomin.samples.spring.graphql.resolver;
+
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.stereotype.Controller;
+import pl.piomin.samples.spring.graphql.domain.Department;
+import pl.piomin.samples.spring.graphql.domain.DepartmentInput;
+import pl.piomin.samples.spring.graphql.domain.Organization;
+import pl.piomin.samples.spring.graphql.repository.DepartmentRepository;
+import pl.piomin.samples.spring.graphql.repository.OrganizationRepository;
+
+@Controller
+public class DepartmentMutableResolver {
+
+	DepartmentRepository departmentRepository;
+	OrganizationRepository organizationRepository;
+
+<span class="fc" id="L18">	DepartmentMutableResolver(DepartmentRepository departmentRepository, OrganizationRepository organizationRepository) {</span>
+<span class="fc" id="L19">		this.departmentRepository = departmentRepository;</span>
+<span class="fc" id="L20">		this.organizationRepository = organizationRepository;</span>
+<span class="fc" id="L21">	}</span>
+
+	@MutationMapping
+	public Department newDepartment(@Argument DepartmentInput department) {
+<span class="fc" id="L25">		Organization organization = organizationRepository.findById(department.getOrganizationId()).get();</span>
+<span class="fc" id="L26">		return departmentRepository.save(new Department(null, department.getName(), null, organization));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

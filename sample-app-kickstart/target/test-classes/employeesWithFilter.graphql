@@ -1,0 +1,13 @@
+query {
+  employeesWithFilter(filter: {
+    salary: {
+      operator: "gt"
+      value: "12000"
+    }
+  }) {
+    id
+    firstName
+    lastName
+    salary
+  }
+}

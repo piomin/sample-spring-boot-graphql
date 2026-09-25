@@ -1,0 +1,12 @@
+query {
+  department(id: 1) {
+    id
+    name
+    organization {
+      id
+    }
+    employees {
+      id
+    }
+  }
+}

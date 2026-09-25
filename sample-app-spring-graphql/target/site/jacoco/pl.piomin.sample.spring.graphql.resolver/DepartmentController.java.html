@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DepartmentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">sample-app-spring-graphql</a> &gt; <a href="index.source.html" class="el_package">pl.piomin.sample.spring.graphql.resolver</a> &gt; <span class="el_source">DepartmentController.java</span></div><h1>DepartmentController.java</h1><pre class="source lang-java linenums">package pl.piomin.sample.spring.graphql.resolver;
+
+import graphql.schema.DataFetchingEnvironment;
+import graphql.schema.DataFetchingFieldSelectionSet;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
+import pl.piomin.sample.spring.graphql.domain.Department;
+import pl.piomin.sample.spring.graphql.domain.DepartmentInput;
+import pl.piomin.sample.spring.graphql.domain.Employee;
+import pl.piomin.sample.spring.graphql.domain.Organization;
+import pl.piomin.sample.spring.graphql.repository.DepartmentRepository;
+import pl.piomin.sample.spring.graphql.repository.OrganizationRepository;
+
+import jakarta.persistence.criteria.Fetch;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+@Controller
+public class DepartmentController {
+
+    DepartmentRepository departmentRepository;
+    OrganizationRepository organizationRepository;
+
+<span class="fc" id="L30">    DepartmentController(DepartmentRepository departmentRepository, OrganizationRepository organizationRepository) {</span>
+<span class="fc" id="L31">        this.departmentRepository = departmentRepository;</span>
+<span class="fc" id="L32">        this.organizationRepository = organizationRepository;</span>
+<span class="fc" id="L33">    }</span>
+
+    @MutationMapping
+    public Department newDepartment(@Argument DepartmentInput department) {
+<span class="fc" id="L37">        Organization organization = organizationRepository.findById(department.getOrganizationId()).get();</span>
+<span class="fc" id="L38">        return departmentRepository.save(new Department(null, department.getName(), null, organization));</span>
+    }
+
+    @QueryMapping
+    public Iterable&lt;Department&gt; departments(DataFetchingEnvironment environment) {
+<span class="fc" id="L43">        DataFetchingFieldSelectionSet s = environment.getSelectionSet();</span>
+<span class="fc" id="L44">        List&lt;Specification&lt;Department&gt;&gt; specifications = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L45" title="3 of 4 branches missed.">        if (s.contains(&quot;employees&quot;) &amp;&amp; !s.contains(&quot;organization&quot;))</span>
+<span class="nc" id="L46">            return departmentRepository.findAll(fetchEmployees());</span>
+<span class="pc bpc" id="L47" title="2 of 4 branches missed.">        else if (!s.contains(&quot;employees&quot;) &amp;&amp; s.contains(&quot;organization&quot;))</span>
+<span class="nc" id="L48">            return departmentRepository.findAll(fetchOrganization());</span>
+<span class="pc bpc" id="L49" title="3 of 4 branches missed.">        else if (s.contains(&quot;employees&quot;) &amp;&amp; s.contains(&quot;organization&quot;))</span>
+<span class="nc" id="L50">            return departmentRepository.findAll(fetchEmployees().and(fetchOrganization()));</span>
+        else
+<span class="fc" id="L52">            return departmentRepository.findAll();</span>
+    }
+
+    @QueryMapping
+    public Department department(@Argument Integer id, DataFetchingEnvironment environment) {
+<span class="fc" id="L57">        Specification&lt;Department&gt; spec = byId(id);</span>
+<span class="fc" id="L58">        DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (selectionSet.contains(&quot;employees&quot;))</span>
+<span class="nc" id="L60">            spec = spec.and(fetchEmployees());</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (selectionSet.contains(&quot;organization&quot;))</span>
+<span class="fc" id="L62">            spec = spec.and(fetchOrganization());</span>
+<span class="fc" id="L63">        return departmentRepository.findOne(spec).orElseThrow(NoSuchElementException::new);</span>
+    }
+
+    private Specification&lt;Department&gt; fetchOrganization() {
+<span class="fc" id="L67">        return (root, query, builder) -&gt; {</span>
+<span class="fc" id="L68">            Fetch&lt;Department, Organization&gt; f = root.fetch(&quot;organization&quot;, JoinType.LEFT);</span>
+<span class="fc" id="L69">            Join&lt;Department, Organization&gt; join = (Join&lt;Department, Organization&gt;) f;</span>
+<span class="fc" id="L70">            return join.getOn();</span>
+        };
+    }
+
+    private Specification&lt;Department&gt; fetchEmployees() {
+<span class="nc" id="L75">        return (root, query, builder) -&gt; {</span>
+<span class="nc" id="L76">            Fetch&lt;Department, Employee&gt; f = root.fetch(&quot;employees&quot;, JoinType.LEFT);</span>
+<span class="nc" id="L77">            Join&lt;Department, Employee&gt; join = (Join&lt;Department, Employee&gt;) f;</span>
+<span class="nc" id="L78">            return join.getOn();</span>
+        };
+    }
+
+    private Specification&lt;Department&gt; byId(Integer id) {
+<span class="fc" id="L83">        return (root, query, builder) -&gt; builder.equal(root.get(&quot;id&quot;), id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
