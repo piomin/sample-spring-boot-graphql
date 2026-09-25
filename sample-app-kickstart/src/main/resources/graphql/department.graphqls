@@ -1,9 +1,9 @@
-type QueryResolver {
+type Query {
     departments: [Department]
     department(id: ID!): Department!
 }
 
-type MutationResolver {
+type Mutation {
     newDepartment(department: DepartmentInput!): Department
 }
 

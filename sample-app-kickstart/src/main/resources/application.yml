@@ -19,10 +19,6 @@ spring:
       hibernate:
         format_sql: true
   sql.init.mode: always
-
-graphql:
-  servlet:
-    enabled: true
-    mapping: /graphql
-  graphiql:
-    enabled: true
+  graphql:
+    graphiql:
+      enabled: true
