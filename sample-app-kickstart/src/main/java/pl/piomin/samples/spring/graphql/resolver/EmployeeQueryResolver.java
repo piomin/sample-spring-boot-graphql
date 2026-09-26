@@ -1,15 +1,16 @@
 package pl.piomin.samples.spring.graphql.resolver;
 
-import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Component;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 import pl.piomin.samples.spring.graphql.domain.Employee;
 import pl.piomin.samples.spring.graphql.filter.EmployeeFilter;
 import pl.piomin.samples.spring.graphql.filter.FilterField;
 import pl.piomin.samples.spring.graphql.repository.EmployeeRepository;
 
-@Component
-public class EmployeeQueryResolver implements GraphQLQueryResolver {
+@Controller
+public class EmployeeQueryResolver {
 
 	private EmployeeRepository repository;
 
@@ -17,15 +18,18 @@ public class EmployeeQueryResolver implements GraphQLQueryResolver {
 		this.repository = repository;
 	}
 
+	@QueryMapping
 	public Iterable<Employee> employees() {
 		return repository.findAll();
 	}
 
-	public Employee employee(Integer id) {
+	@QueryMapping
+	public Employee employee(@Argument Integer id) {
 		return repository.findById(id).get();
 	}
 
-	public Iterable<Employee> employeesWithFilter(EmployeeFilter filter) {
+	@QueryMapping
+	public Iterable<Employee> employeesWithFilter(@Argument EmployeeFilter filter) {
 		Specification<Employee> spec = null;
 		if (filter.getSalary() != null)
 			spec = bySalary(filter.getSalary());
@@ -41,14 +45,14 @@ public class EmployeeQueryResolver implements GraphQLQueryResolver {
 	}
 
 	private Specification<Employee> bySalary(FilterField filterField) {
-		return (Specification<Employee>) (root, query, builder) -> filterField.generateCriteria(builder, root.get("salary"));
+		return (root, query, builder) -> filterField.generateCriteria(builder, root.get("salary"));
 	}
 
 	private Specification<Employee> byAge(FilterField filterField) {
-		return (Specification<Employee>) (root, query, builder) -> filterField.generateCriteria(builder, root.get("age"));
+		return (root, query, builder) -> filterField.generateCriteria(builder, root.get("age"));
 	}
 
 	private Specification<Employee> byPosition(FilterField filterField) {
-		return (Specification<Employee>) (root, query, builder) -> filterField.generateCriteria(builder, root.get("position"));
+		return (root, query, builder) -> filterField.generateCriteria(builder, root.get("position"));
 	}
 }

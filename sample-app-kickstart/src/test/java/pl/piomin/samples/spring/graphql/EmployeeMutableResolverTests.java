@@ -1,25 +1,32 @@
 package pl.piomin.samples.spring.graphql;
 
-import com.graphql.spring.boot.test.GraphQLTest;
-import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.graphql.ExecutionGraphQlService;
+import org.springframework.graphql.test.tester.ExecutionGraphQlServiceTester;
+import org.springframework.graphql.test.tester.GraphQlTester;
 import pl.piomin.samples.spring.graphql.domain.Employee;
 
-import java.io.IOException;
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class EmployeeMutableResolverTests {
 
     @Autowired
-    GraphQLTestTemplate template;
+    private ExecutionGraphQlService graphQlService;
+
+    private GraphQlTester tester() {
+        return ExecutionGraphQlServiceTester.create(graphQlService);
+    }
 
     @Test
-    void newEmployee() throws IOException {
-        Employee employee = template.postForResource("newEmployee.graphql")
-                .get("$.data.newEmployee", Employee.class);
+    void newEmployee() {
+        String query = "mutation { newEmployee(employee: { firstName: \"John\" lastName: \"Wick\" position: \"developer\" salary: 10000 age: 20 departmentId: 1 organizationId: 1}) { id } }";
+        Employee employee = tester().document(query)
+                .execute()
+                .path("data.newEmployee")
+                .entity(Employee.class)
+                .get();
         Assertions.assertNotNull(employee);
         Assertions.assertNotNull(employee.getId());
     }

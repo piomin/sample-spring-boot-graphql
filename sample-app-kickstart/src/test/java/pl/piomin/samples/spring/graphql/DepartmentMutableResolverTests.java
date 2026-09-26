@@ -1,25 +1,32 @@
 package pl.piomin.samples.spring.graphql;
 
-import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.graphql.ExecutionGraphQlService;
+import org.springframework.graphql.test.tester.ExecutionGraphQlServiceTester;
+import org.springframework.graphql.test.tester.GraphQlTester;
 import pl.piomin.samples.spring.graphql.domain.Department;
-import pl.piomin.samples.spring.graphql.domain.Employee;
 
-import java.io.IOException;
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class DepartmentMutableResolverTests {
 
     @Autowired
-    GraphQLTestTemplate template;
+    private ExecutionGraphQlService graphQlService;
+
+    private GraphQlTester tester() {
+        return ExecutionGraphQlServiceTester.create(graphQlService);
+    }
 
     @Test
-    void newDepartment() throws IOException {
-        Department department = template.postForResource("newDepartment.graphql")
-                .get("$.data.newDepartment", Department.class);
+    void newDepartment() {
+        String query = "mutation { newDepartment(department: { name: \"Test10\" organizationId: 2}) { id } }";
+        Department department = tester().document(query)
+                .execute()
+                .path("data.newDepartment")
+                .entity(Department.class)
+                .get();
         Assertions.assertNotNull(department);
         Assertions.assertNotNull(department.getId());
     }

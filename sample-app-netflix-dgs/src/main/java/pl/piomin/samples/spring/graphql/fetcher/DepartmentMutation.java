@@ -1,15 +1,15 @@
 package pl.piomin.samples.spring.graphql.fetcher;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsData;
-import com.netflix.graphql.dgs.InputArgument;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.stereotype.Controller;
 import pl.piomin.samples.spring.graphql.domain.Department;
 import pl.piomin.samples.spring.graphql.domain.DepartmentInput;
 import pl.piomin.samples.spring.graphql.domain.Organization;
 import pl.piomin.samples.spring.graphql.repository.DepartmentRepository;
 import pl.piomin.samples.spring.graphql.repository.OrganizationRepository;
 
-@DgsComponent
+@Controller
 public class DepartmentMutation {
 
     DepartmentRepository departmentRepository;
@@ -20,10 +20,10 @@ public class DepartmentMutation {
         this.organizationRepository = organizationRepository;
     }
 
-    @DgsData(parentType = "MutationResolver", field = "newDepartment")
-    public Department newDepartment(@InputArgument("department") DepartmentInput departmentInput) {
-        Organization organization = organizationRepository.findById(departmentInput.getOrganizationId()).orElseThrow();
-        return departmentRepository.save(new Department(null, departmentInput.getName(), null, organization));
+    @MutationMapping
+    public Department newDepartment(@Argument DepartmentInput department) {
+        Organization organization = organizationRepository.findById(department.getOrganizationId()).orElseThrow();
+        return departmentRepository.save(new Department(null, department.getName(), null, organization));
     }
 
 }

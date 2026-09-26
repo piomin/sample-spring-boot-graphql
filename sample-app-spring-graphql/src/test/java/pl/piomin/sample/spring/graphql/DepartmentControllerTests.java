@@ -3,24 +3,28 @@ package pl.piomin.sample.spring.graphql;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.graphql.ExecutionGraphQlService;
+import org.springframework.graphql.test.tester.ExecutionGraphQlServiceTester;
 import org.springframework.graphql.test.tester.GraphQlTester;
 import pl.piomin.sample.spring.graphql.domain.Department;
 
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@AutoConfigureGraphQlTester
 public class DepartmentControllerTests {
 
     @Autowired
-    private GraphQlTester tester;
+    private ExecutionGraphQlService graphQlService;
+
+    private GraphQlTester tester() {
+        return ExecutionGraphQlServiceTester.create(graphQlService);
+    }
 
     @Test
     void addDepartment() {
         String query = "mutation { newDepartment(department: { name: \"Test10\" organizationId: 1}) { id } }";
-        Department department = tester.document(query)
+        Department department = tester().document(query)
                 .execute()
                 .path("data.newDepartment")
                 .entity(Department.class)
@@ -32,7 +36,7 @@ public class DepartmentControllerTests {
     @Test
     void findAll() {
         String query = "{ departments { id name } }";
-        List<Department> departments = tester.document(query)
+        List<Department> departments = tester().document(query)
                 .execute()
                 .path("data.departments[*]")
                 .entityList(Department.class)
@@ -45,7 +49,7 @@ public class DepartmentControllerTests {
     @Test
     void findById() {
         String query = "{ department(id: 1) { id name organization { id } } }";
-        Department department = tester.document(query)
+        Department department = tester().document(query)
                 .execute()
                 .path("data.department")
                 .entity(Department.class)

@@ -1,7 +1,8 @@
 package pl.piomin.samples.spring.graphql.resolver;
 
-import graphql.kickstart.tools.GraphQLMutationResolver;
-import org.springframework.stereotype.Component;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.stereotype.Controller;
 import pl.piomin.samples.spring.graphql.domain.Department;
 import pl.piomin.samples.spring.graphql.domain.Employee;
 import pl.piomin.samples.spring.graphql.domain.EmployeeInput;
@@ -10,8 +11,8 @@ import pl.piomin.samples.spring.graphql.repository.DepartmentRepository;
 import pl.piomin.samples.spring.graphql.repository.EmployeeRepository;
 import pl.piomin.samples.spring.graphql.repository.OrganizationRepository;
 
-@Component
-public class EmployeeMutableResolver implements GraphQLMutationResolver {
+@Controller
+public class EmployeeMutableResolver {
 
 	DepartmentRepository departmentRepository;
 	EmployeeRepository employeeRepository;
@@ -23,11 +24,12 @@ public class EmployeeMutableResolver implements GraphQLMutationResolver {
 		this.organizationRepository = organizationRepository;
 	}
 
-	public Employee newEmployee(EmployeeInput employeeInput) {
-		Department department = departmentRepository.findById(employeeInput.getDepartmentId()).get();
-		Organization organization = organizationRepository.findById(employeeInput.getOrganizationId()).get();
-		return employeeRepository.save(new Employee(null, employeeInput.getFirstName(), employeeInput.getLastName(),
-				employeeInput.getPosition(), employeeInput.getAge(), employeeInput.getSalary(),
+	@MutationMapping
+	public Employee newEmployee(@Argument EmployeeInput employee) {
+		Department department = departmentRepository.findById(employee.getDepartmentId()).get();
+		Organization organization = organizationRepository.findById(employee.getOrganizationId()).get();
+		return employeeRepository.save(new Employee(null, employee.getFirstName(), employee.getLastName(),
+				employee.getPosition(), employee.getAge(), employee.getSalary(),
 				department, organization));
 	}
 

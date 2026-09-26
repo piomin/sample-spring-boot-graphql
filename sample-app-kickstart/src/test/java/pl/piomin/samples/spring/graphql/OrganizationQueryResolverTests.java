@@ -1,31 +1,46 @@
 package pl.piomin.samples.spring.graphql;
 
-import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.graphql.ExecutionGraphQlService;
+import org.springframework.graphql.test.tester.ExecutionGraphQlServiceTester;
+import org.springframework.graphql.test.tester.GraphQlTester;
 import pl.piomin.samples.spring.graphql.domain.Organization;
 
-import java.io.IOException;
+import java.util.List;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class OrganizationQueryResolverTests {
 
     @Autowired
-    GraphQLTestTemplate template;
+    private ExecutionGraphQlService graphQlService;
 
-    @Test
-    void organizations() throws IOException {
-        Organization[] organizations = template.postForResource("organizations.graphql")
-                .get("$.data.organizations", Organization[].class);
-        Assertions.assertTrue(organizations.length > 0);
+    private GraphQlTester tester() {
+        return ExecutionGraphQlServiceTester.create(graphQlService);
     }
 
     @Test
-    void organizationById() throws IOException {
-        Organization organization = template.postForResource("organizationById.graphql")
-                .get("$.data.organization", Organization.class);
+    void organizations() {
+        String query = "{ organizations { id name } }";
+        List<Organization> organizations = tester().document(query)
+                .execute()
+                .path("data.organizations[*]")
+                .entityList(Organization.class)
+                .get();
+        Assertions.assertNotNull(organizations);
+        Assertions.assertTrue(organizations.size() > 0);
+    }
+
+    @Test
+    void organizationById() {
+        String query = "{ organization(id: 1) { id name } }";
+        Organization organization = tester().document(query)
+                .execute()
+                .path("data.organization")
+                .entity(Organization.class)
+                .get();
         Assertions.assertNotNull(organization);
         Assertions.assertNotNull(organization.getId());
     }
