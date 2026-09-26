@@ -1,37 +1,52 @@
 package pl.piomin.samples.spring.graphql;
 
-import com.netflix.graphql.dgs.DgsQueryExecutor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.graphql.ExecutionGraphQlService;
+import org.springframework.graphql.test.tester.ExecutionGraphQlServiceTester;
+import org.springframework.graphql.test.tester.GraphQlTester;
 import pl.piomin.samples.spring.graphql.domain.Department;
 
-@SpringBootTest
+import java.util.List;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class DepartmentFetcherTests {
 
     @Autowired
-    DgsQueryExecutor executor;
+    private ExecutionGraphQlService graphQlService;
+
+    private GraphQlTester tester() {
+        return ExecutionGraphQlServiceTester.create(graphQlService);
+    }
 
     @Test
     void findAll() {
         String query = "{ departments { id name } }";
-        Department[] departments = executor
-                .executeAndExtractJsonPathAsObject(query, "data.departments[*]", Department[].class);
-        Assertions.assertTrue(departments.length > 0);
-        Assertions.assertNotNull(departments[0].getId());
-        Assertions.assertNotNull(departments[0].getName());
+        List<Department> departments = tester().document(query)
+                .execute()
+                .path("data.departments[*]")
+                .entityList(Department.class)
+                .get();
+        Assertions.assertNotNull(departments);
+        Assertions.assertTrue(departments.size() > 0);
+        Assertions.assertNotNull(departments.get(0).getId());
+        Assertions.assertNotNull(departments.get(0).getName());
     }
 
     @Test
     void findById() {
         String query = "{ department(id: 1) { id name organization { id } } }";
-        Department department = executor
-                .executeAndExtractJsonPathAsObject(query, "data.department", Department.class);
+        Department department = tester().document(query)
+                .execute()
+                .path("data.department")
+                .entity(Department.class)
+                .get();
         Assertions.assertNotNull(department);
         Assertions.assertNotNull(department.getId());
         Assertions.assertNotNull(department.getOrganization());
         Assertions.assertNotNull(department.getOrganization().getId());
     }
-    
+
 }

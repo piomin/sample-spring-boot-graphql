@@ -1,51 +1,37 @@
 package pl.piomin.samples.spring.graphql.fetcher;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsData;
-import com.netflix.graphql.dgs.InputArgument;
-import com.netflix.graphql.dgs.context.DgsContext;
-import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
-import graphql.schema.DataFetchingEnvironment;
 import org.springframework.data.jpa.domain.Specification;
-import pl.piomin.samples.spring.graphql.context.EmployeeContext;
-import pl.piomin.samples.spring.graphql.context.EmployeeContextBuilder;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 import pl.piomin.samples.spring.graphql.domain.Employee;
 import pl.piomin.samples.spring.graphql.filter.EmployeeFilter;
 import pl.piomin.samples.spring.graphql.filter.FilterField;
 import pl.piomin.samples.spring.graphql.repository.EmployeeRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-@DgsComponent
+@Controller
 public class EmployeeFetcher {
 
     private EmployeeRepository repository;
-    private EmployeeContextBuilder contextBuilder;
 
-    public EmployeeFetcher(EmployeeRepository repository, EmployeeContextBuilder contextBuilder) {
+    public EmployeeFetcher(EmployeeRepository repository) {
         this.repository = repository;
-        this.contextBuilder = contextBuilder;
     }
 
-    @DgsData(parentType = "QueryResolver", field = "employees")
-    public List<Employee> findAll(DataFetchingEnvironment dfe) {
-        List<Employee> employees = (List<Employee>) repository.findAll();
-        contextBuilder.withEmployees(employees).build();
-        return employees;
+    @QueryMapping
+    public List<Employee> employees() {
+        return (List<Employee>) repository.findAll();
     }
 
-    @DgsData(parentType = "QueryResolver", field = "employee")
-    public Employee findById(@InputArgument("id") Integer id, DataFetchingEnvironment dfe) {
-        EmployeeContext employeeContext = DgsContext.getCustomContext(dfe);
-        List<Employee> employees = employeeContext.getEmployees();
-        Optional<Employee> employeeOpt = employees.stream().filter(employee -> employee.getId().equals(id))
-                .findFirst();
-        return employeeOpt.orElseGet(() -> repository.findById(id).orElseThrow(DgsEntityNotFoundException::new));
+    @QueryMapping
+    public Employee employee(@Argument Integer id) {
+        return repository.findById(id).orElseThrow();
     }
 
-    @DgsData(parentType = "QueryResolver", field = "employeesWithFilter")
-    public Iterable<Employee> findWithFilter(@InputArgument("filter") EmployeeFilter filter) {
+    @QueryMapping
+    public Iterable<Employee> employeesWithFilter(@Argument EmployeeFilter filter) {
         Specification<Employee> spec = null;
         if (filter.getSalary() != null)
             spec = bySalary(filter.getSalary());

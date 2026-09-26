@@ -11,8 +11,8 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private String position;
-	private int salary;
-	private int age;
+	private Integer salary;
+	private Integer age;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Department department;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -21,7 +21,7 @@ public class Employee {
 	public Employee() {
 	}
 
-	public Employee(Integer id, String firstName, String lastName, String position, int salary, int age,
+	public Employee(Integer id, String firstName, String lastName, String position, Integer salary, Integer age,
 					Department department, Organization organization) {
 		this.id = id;
 		this.firstName = firstName;
@@ -65,19 +65,19 @@ public class Employee {
 		this.position = position;
 	}
 
-	public int getSalary() {
+	public Integer getSalary() {
 		return salary;
 	}
 
-	public void setSalary(int salary) {
+	public void setSalary(Integer salary) {
 		this.salary = salary;
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 

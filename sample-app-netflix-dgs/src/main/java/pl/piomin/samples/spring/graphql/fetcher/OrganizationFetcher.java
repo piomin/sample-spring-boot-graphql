@@ -1,13 +1,12 @@
 package pl.piomin.samples.spring.graphql.fetcher;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsData;
-import com.netflix.graphql.dgs.InputArgument;
-import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 import pl.piomin.samples.spring.graphql.domain.Organization;
 import pl.piomin.samples.spring.graphql.repository.OrganizationRepository;
 
-@DgsComponent
+@Controller
 public class OrganizationFetcher {
 
     private OrganizationRepository repository;
@@ -16,13 +15,13 @@ public class OrganizationFetcher {
         this.repository = repository;
     }
 
-    @DgsData(parentType = "QueryResolver", field = "organizations")
-    public Iterable<Organization> findAll() {
+    @QueryMapping
+    public Iterable<Organization> organizations() {
         return repository.findAll();
     }
 
-    @DgsData(parentType = "QueryResolver", field = "organization")
-    public Organization findById(@InputArgument("id") Integer id) {
-        return repository.findById(id).orElseThrow(DgsEntityNotFoundException::new);
+    @QueryMapping
+    public Organization organization(@Argument Integer id) {
+        return repository.findById(id).orElseThrow();
     }
 }

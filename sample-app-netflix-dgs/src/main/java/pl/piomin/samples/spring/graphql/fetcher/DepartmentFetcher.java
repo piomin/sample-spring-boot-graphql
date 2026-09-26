@@ -1,26 +1,20 @@
 package pl.piomin.samples.spring.graphql.fetcher;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsData;
-import com.netflix.graphql.dgs.InputArgument;
-import com.netflix.graphql.dgs.context.DgsContext;
-import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingFieldSelectionSet;
 import jakarta.persistence.criteria.Fetch;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
-import pl.piomin.samples.spring.graphql.context.EmployeeContext;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 import pl.piomin.samples.spring.graphql.domain.Department;
 import pl.piomin.samples.spring.graphql.domain.Employee;
 import pl.piomin.samples.spring.graphql.domain.Organization;
 import pl.piomin.samples.spring.graphql.repository.DepartmentRepository;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-@DgsComponent
+@Controller
 public class DepartmentFetcher {
 
     private DepartmentRepository repository;
@@ -29,8 +23,8 @@ public class DepartmentFetcher {
         this.repository = repository;
     }
 
-    @DgsData(parentType = "QueryResolver", field = "departments")
-    public Iterable<Department> findAll(DataFetchingEnvironment environment) {
+    @QueryMapping
+    public Iterable<Department> departments(DataFetchingEnvironment environment) {
         DataFetchingFieldSelectionSet s = environment.getSelectionSet();
         if (s.contains("employees") && !s.contains("organization"))
             return repository.findAll(fetchEmployees());
@@ -42,26 +36,15 @@ public class DepartmentFetcher {
             return repository.findAll();
     }
 
-    @DgsData(parentType = "QueryResolver", field = "department")
-    public Department findById(@InputArgument("id") Integer id, DataFetchingEnvironment environment) {
+    @QueryMapping
+    public Department department(@Argument Integer id, DataFetchingEnvironment environment) {
         Specification<Department> spec = byId(id);
         DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();
-        EmployeeContext employeeContext = DgsContext.getCustomContext(environment);
-        Set<Employee> employees = null;
-        if (selectionSet.contains("employees")) {
-            if (employeeContext.getEmployees().size() == 0)
-                spec = spec.and(fetchEmployees());
-            else
-                employees = employeeContext.getEmployees().stream()
-                        .filter(emp -> emp.getDepartment().getId().equals(id))
-                        .collect(Collectors.toSet());
-        }
+        if (selectionSet.contains("employees"))
+            spec = spec.and(fetchEmployees());
         if (selectionSet.contains("organization"))
             spec = spec.and(fetchOrganization());
-        Department department = repository.findOne(spec).orElseThrow(DgsEntityNotFoundException::new);
-        if (employees != null)
-            department.setEmployees(employees);
-        return department;
+        return repository.findOne(spec).orElseThrow();
     }
 
     private Specification<Department> fetchOrganization() {

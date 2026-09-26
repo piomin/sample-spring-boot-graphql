@@ -6,15 +6,15 @@ public class EmployeeInput {
     private String firstName;
     private String lastName;
     private String position;
-    private int salary;
-    private int age;
+    private Integer salary;
+    private Integer age;
     private Integer departmentId;
     private Integer organizationId;
 
     public EmployeeInput() {
     }
 
-    public EmployeeInput(String firstName, String lastName, String position, int salary, int age, 
+    public EmployeeInput(String firstName, String lastName, String position, Integer salary, Integer age, 
                         Integer departmentId, Integer organizationId) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,19 +49,19 @@ public class EmployeeInput {
         this.position = position;
     }
 
-    public int getSalary() {
+    public Integer getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(Integer salary) {
         this.salary = salary;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -86,8 +86,8 @@ public class EmployeeInput {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeInput that = (EmployeeInput) o;
-        return salary == that.salary &&
-               age == that.age &&
+        return Objects.equals(salary, that.salary) &&
+               Objects.equals(age, that.age) &&
                Objects.equals(firstName, that.firstName) &&
                Objects.equals(lastName, that.lastName) &&
                Objects.equals(position, that.position) &&
