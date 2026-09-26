@@ -1,8 +1,0 @@
-mutation {
-  newDepartment(department: {
-    name: "Test10"
-    organizationId: 2
-  }) {
-    id
-  }
-}

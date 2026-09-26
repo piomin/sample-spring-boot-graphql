@@ -1,6 +1,0 @@
-query {
-  organization(id: 1) {
-    id
-    name
-  }
-}

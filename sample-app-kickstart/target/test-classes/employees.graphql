@@ -1,8 +1,0 @@
-query {
-  employees {
-    id
-    firstName
-    lastName
-    salary
-  }
-}

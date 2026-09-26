@@ -1,6 +1,0 @@
-/home/runner/work/sample-spring-boot-graphql/sample-spring-boot-graphql/sample-app-kickstart/src/test/java/pl/piomin/samples/spring/graphql/DepartmentMutableResolverTests.java
-/home/runner/work/sample-spring-boot-graphql/sample-spring-boot-graphql/sample-app-kickstart/src/test/java/pl/piomin/samples/spring/graphql/DepartmentQueryResolverTests.java
-/home/runner/work/sample-spring-boot-graphql/sample-spring-boot-graphql/sample-app-kickstart/src/test/java/pl/piomin/samples/spring/graphql/EmployeeMutableResolverTests.java
-/home/runner/work/sample-spring-boot-graphql/sample-spring-boot-graphql/sample-app-kickstart/src/test/java/pl/piomin/samples/spring/graphql/EmployeeQueryResolverTests.java
-/home/runner/work/sample-spring-boot-graphql/sample-spring-boot-graphql/sample-app-kickstart/src/test/java/pl/piomin/samples/spring/graphql/OrganizationMutableResolverTests.java
-/home/runner/work/sample-spring-boot-graphql/sample-spring-boot-graphql/sample-app-kickstart/src/test/java/pl/piomin/samples/spring/graphql/OrganizationQueryResolverTests.java
