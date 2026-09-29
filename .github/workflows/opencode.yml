@@ -38,4 +38,4 @@ jobs:
           GOOGLE_VERTEX_LOCATION: ${{ secrets.GOOGLE_VERTEX_LOCATION }}
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/gcp-credentials.json
         with:
-          model: google-vertex-anthropic/claude-sonnet-4-6@default
+          model: google-vertex-anthropic/claude-opus-4-6@default
